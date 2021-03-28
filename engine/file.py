@@ -14,7 +14,7 @@ class InputFile:
 
     def load(self):
         try:
-            with open(self.filename) as f:
+            with open(self.Filename) as f:
                 self.Content = f.read()
         except IOError:
             print("Fail to open file ", self.filename)
@@ -24,8 +24,7 @@ class InputFile:
         newlineFinder = re.compile("\x0a")
 
         # Record positions of all lines
-        indexes = [(m.start(0), m.end(0)) for m in newlineFinder.finditer(self.Content)]
-        self.NewLineIndexes = [idx[0] for idx in indexes]
+        self.NewLineIndexes = [m.start(0)for m in newlineFinder.finditer(self.Content)]
 
     # CollectEvidenceSample
     def Record(self, index):
@@ -49,14 +48,15 @@ class InputFile:
         line = -1
 
         # TODO: Replace with faster algorithm, like binary search
-        for item, id in enumerate(self.NewLineIndexes):
-            if item >= index:
-                line = item
+        for i, idx in enumerate(self.NewLineIndexes):
+            if idx >= index:
+                line = i
                 break
+
         if line == -1:
             return -1, -1
 
-        lastline = max(0, lid-1)
+        lastline = max(0, line-1)
         column = index - self.NewLineIndexes[lastline]
 
         return line, column

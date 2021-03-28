@@ -6,10 +6,9 @@ class Info:
         self.Recommendation = recom
 
 class Issue:
-    def __init__(self, vid, line, info, col, content):
-        self.VulnerabilityID = vid
-        self.Line = line
+    def __init__(self, info, line, col, content):
         self.Info = info
+        self.Line = line
         self.Column = col
         self.Content = content
 

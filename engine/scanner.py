@@ -9,6 +9,7 @@ languages = {
     ".js" : "Javascript",
     ".ts" : "Javascript",
     ".java" : "Java",
+    ".py" : "Python"
     #  Support other languages
 }
 class Scanner:
