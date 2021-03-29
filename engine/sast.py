@@ -1,8 +1,7 @@
 from rule import Rule
 class Info:
-    def __init__(self, desc, title, recom):
+    def __init__(self, desc, recom):
         self.Description = desc
-        self.Title = title
         self.Recommendation = recom
 
 class Issue:
