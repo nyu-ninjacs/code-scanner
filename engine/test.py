@@ -15,12 +15,12 @@ class FakeRule:
 class FakeRule1(FakeRule):
     def __init__(self):
         self.finder = re.compile("def")
-        self.info = Info("Find def", "test1", "no recommendation")
+        self.info = Info("Find def", "no recommendation")
 
 class FakeRule2(FakeRule):
     def __init__(self):
         self.finder = re.compile("\[.*\]")
-        self.info = Info("Find []", "test2", "ninjacs!")
+        self.info = Info("Find []", "ninjacs!")
 
 class FakeRuleBuilder:
     def Build(self, languages):
