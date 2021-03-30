@@ -7,7 +7,8 @@ class RuleBuilder:
         pass
 
     def Build(self, languages):
-        return {
-            'Javascript' : JavascriptRules
-        }
-        
+        rules = []
+        for language in languages:
+            if(language == 'Javascript'):
+                rules += JavascriptRules
+        return rules
