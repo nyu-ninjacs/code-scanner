@@ -6,8 +6,7 @@ from sast import Issue
 def run_rule(inputFile, finder, rule, info, fn):
     issues = []
     results = finder.finditer(inputFile.Content)
-    if not results:
-        return issues
+
     for result in results:
         foundedContent = inputFile.Content[result.start():result.end()]
 
@@ -24,7 +23,7 @@ def run_and_rule(inputFile, rule, info):
     all_issues = []
     for expr in rule.And:
         issues = run_rule(inputFile,expr, rule, info, None)
-        if not issues:
+        if len(issues) == 0:
             return issues
         all_issues += issues
     return all_issues
