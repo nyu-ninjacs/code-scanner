@@ -12,3 +12,4 @@ class RuleBuilder:
             if(language == 'Javascript'):
                 rules += JavascriptRules
         return rules
+        
