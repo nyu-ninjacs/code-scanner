@@ -1,11 +1,11 @@
 import re
-from engine.sast import Info
-from engine.file import Record
-from engine.sast import Issue
+from sast import Info
+from file import InputFile
+from sast import Issue
 
-def run_rule(self, inputFile, finder, rule, info, fn):
+def run_rule(inputFile, finder, rule, info, fn):
     issues = []
-    results = finder.finditer(pattern, inputFile.Content)
+    results = finder.finditer(inputFile.Content)
     if not results:
         return issues
     for result in results:
@@ -15,12 +15,12 @@ def run_rule(self, inputFile, finder, rule, info, fn):
             reportIssue = fn(foundedContent, rule)
             if not reportIssue:
                 return issues
-        evidence = Record(result[0])
-        i = Issue(info, evidence.Line, evidence.Column, foundedContent)
+        evidence = inputFile.Record(result.start(0))
+        i = Issue(info, evidence.Line, evidence.Column, evidence.Content)
         issues.append(i)
     return issues
-    
-def run_and_rule(self, inputFile, rule, info):
+
+def run_and_rule(inputFile, rule, info):
     all_issues = []
     for expr in rule.And:
         issues = run_rule(inputFile,expr, rule, info, None)
@@ -40,12 +40,12 @@ class Rule:
         self.And = And
     
     def Match(self, inputFile):
-        issues = []
-        info = Info(self.description, self.recommendation)
-        if self.IsAndMatch:
-            i = run_and_rule(inputFile, self, info)
-            issues += i
-        return issues
+        info = Info(self.Description, self.Recommendation)
+        if self.IsAndMatch():
+            return run_and_rule(inputFile, self, info)
+        elif self.IsMatch():
+            return run_rule(inputFile, self.ExactMatch, self, info, None)
+        return []
 
     def IsMatch(self):
         return self.ExactMatch != None

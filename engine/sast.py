@@ -1,4 +1,3 @@
-from rule import Rule
 class Info:
     def __init__(self, desc, recom):
         self.Description = desc

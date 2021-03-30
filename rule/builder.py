@@ -1,5 +1,5 @@
 import re
-from rule.javascript import JavascriptRules
+from javascript import JavascriptRules
 
 class RuleBuilder:
 

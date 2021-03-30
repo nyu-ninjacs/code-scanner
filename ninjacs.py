@@ -3,6 +3,7 @@ sys.path.append(r'./engine')
 sys.path.append(r'./rule')
 
 from engine import Engine
+from builder import RuleBuilder
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -10,6 +11,6 @@ if __name__ == "__main__":
         exit(0)
 
     # Replace 0 with rule builder
-    eng = Engine(0)
-    result = eng.Scan(argv[1])
+    eng = Engine(RuleBuilder())
+    result = eng.Scan(sys.argv[1])
     result.ReportConsole()
