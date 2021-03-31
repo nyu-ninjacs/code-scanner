@@ -17,7 +17,7 @@ class InputFile:
             with open(self.Filename) as f:
                 self.Content = f.read()
         except IOError:
-            print("Fail to open file ", self.filename)
+            print("Fail to open file ", self.Filename)
             exit(0)
 
         # Match new line
@@ -55,8 +55,11 @@ class InputFile:
 
         if line == -1:
             return -1, -1
-
-        lastline = max(0, line-1)
-        column = index - self.NewLineIndexes[lastline]
+        
+        if line == 0:
+            column = index
+        else:
+            lastline = max(0, line-1)
+            column = index - self.NewLineIndexes[lastline]
 
         return line, column
