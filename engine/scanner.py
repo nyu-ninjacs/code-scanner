@@ -3,14 +3,12 @@ from result import Result
 from file import InputFile
 from sast import *
 
-# TODO: ADD rules()
-
 languages = {
     ".js" : "Javascript",
     ".ts" : "Javascript",
     ".java" : "Java",
-    ".py" : "Python"
-    #  Support other languages
+    ".py" : "Python",
+    ".cs" : "Csharp"
 }
 class Scanner:
     def __init__(self, filename, ruleBuilder):
