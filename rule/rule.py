@@ -30,14 +30,13 @@ def run_and_rule(inputFile, rule, info):
 
 class Rule:
 
-    def __init__(self, Description, Recommendation, Category, ExactMatch = None, And = None):
+    def __init__(self, Description, Recommendation, Category, ExactMatch = None, And = [], NotOr = []):
         self.Description = Description
         self.Recommendation = Recommendation
         self.Category = Category
         self.ExactMatch = ExactMatch
-        if And is None:
-            And = []
         self.And = And
+        self.NotOr = NotOr
     
     def Match(self, inputFile):
         info = Info(self.Description, self.Recommendation)
