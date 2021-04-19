@@ -41,7 +41,7 @@ class InputFile:
         end = self.NewLineIndexes[line]
         lineContent = self.Content[start:end].replace("\r","").replace("\n","")
 
-        return Warning(line, column, lineContent)
+        return Warning(line+1, column, lineContent)
 
     def findLineAndColumn(self, index):
         # Find line id
