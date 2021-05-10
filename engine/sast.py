@@ -1,9 +1,9 @@
-class Info:
+class Info(object):
     def __init__(self, desc, recom):
         self.Description = desc
         self.Recommendation = recom
 
-class Issue:
+class Issue(object):
     def __init__(self, info, line, col, content, owasp = "", severity = ""):
         self.Info = info
         self.Line = line

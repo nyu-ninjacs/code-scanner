@@ -4,11 +4,10 @@
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="nodejsscan is a static security code scanner for Node.js applications.">
-      <meta name="author" content="Ajin Abraham">
+      <meta name="description" content="ninjacs is a static security code scanner.">
       <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='assets/img/apple-touch-icon.png') }}">
       <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/img/favicon.ico') }}">
-      <title>nodejsscan v{{version}} </title>
+      <title>ninjacs v{{version}} </title>
       <link href="{{ url_for('static', filename='assets/css/index.css') }}" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
    </head>
@@ -21,17 +20,16 @@
                   <div align="center" class="inner">
                       <div class="row">
                         <div class="col-md-8 col-md-offset-2">
-                            <img src ="{{ url_for('static', filename='assets/img/nodejsscan.png') }}" width="25%" height="35%"><h1 class="brand-heading">nodejsscan</h1>
                             
                              <p class="intro-text">
-                                <input id="repo" type="text" placeholder="git" class="repourl" />
-                                <button id="git" class="clone">Clone</button></p>
+                                <input id="repo" type="text" placeholder="File name" class="repourl" />
+                                <button id="git" class="clone">Scan</button></p>
                            
                         </div>
                     </div>
                   </div>
                </div>
-               <div class="inner cover">
+               <!-- <div class="inner cover">
                   <div style="visibility:hidden; opacity:0" id="drop">
                      <div id="textnode">Drop anywhere!</div>
                   </div>
@@ -48,16 +46,7 @@
                      <h5 id="status"></h5>
                      <progress id="progressBar" value="0" max="100" style="width:300px;visibility:hidden;" ></progress>
                   </form>
-               </div>
-               <div class="mastfoot">
-                  <div class="inner">
-                     </br>
-                     <div class="copyright">
-                      <h4><a href="/scans/"> RECENT SCANS</a></h4>
-                      &copy; {{ year }}  <strong>nodejsscan v{{ version }}</strong> | <a href="https://ajinabraham.com">Ajin Abraham</a> | <a href="https://opensecurity.in">OpenSecurity</a>
-                    </div>
-                  </div>
-               </div>
+               </div> -->
             </div>
          </div>
       </div>
@@ -79,7 +68,7 @@
                         if (i == 5) {
                             i = 1;
                         }
-                    }, 2000);
+                    }, 1000);
             }
             // Response Handler     
             function responseHandler(json, isbutton) {
@@ -118,17 +107,6 @@
                     return false;
                 }
                 return true;
-          }
-          // Is allowed mimetype
-          function isValidMime(file_mime){
-                if (file_mime.length < 1)
-                    // bypass if mime is not available
-                    return true; 
-                var supported = [{% for mime in mimes %}'{{mime}}',{% endfor %}];
-                if(supported.indexOf(file_mime) >-1)
-                    return true;
-                 _('status').innerText = "MIME type (" + file_mime + ") is not supported!";
-                return false;
           }
          // File Upload
          function uploadFile(file, i) {
@@ -217,8 +195,8 @@
                 //Button Clone
                 var analyze;
                  $('#git').on('click', function () {
-                   $.post('/git/', {
-                        url: $('#repo').val()
+                   $.post('/scan/', {
+                        filename: $('#repo').val()
                     },
                     function (result) {
                         if (result.status === "success") {
