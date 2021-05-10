@@ -39,6 +39,7 @@ def scan_result(filename):
     context['issues'] = utils.get_issues(res.Issues)
     context['lines'] = res.Lines
     context['size'] = res.Size
+    context['issues_dist'] = utils.get_issues_dist(res.Issues)
     print(context)
     return render_template('scan_result.html', **context)
 

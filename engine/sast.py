@@ -5,6 +5,7 @@ class Info(object):
 
 class Issue(object):
     def __init__(self, info, line, col, content, owasp = "", cwe= "", severity = ""):
+
         self.Info = info
         self.Line = line
         self.Column = col

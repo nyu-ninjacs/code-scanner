@@ -162,8 +162,8 @@ Scan Results
 
     var data = {
         labels: [
-        {% for issue in issues %}
-         '{{issue.owasp | deslugify | upper}}',
+        {% for k in issues_dist.keys() %}
+         '{{ k | deslugify | upper}}',
         {% endfor %}
         ],
         datasets: [
@@ -176,7 +176,9 @@ Scan Results
                 borderDashOffset: 0.0,
                 hoverBackgroundColor: gradientStroke,
                 data: [
-                {{ total_issues }}
+                {% for v in issues_dist.values() %}
+                  {{ v }}
+                {% endfor %}
                 ],
             }
         ]

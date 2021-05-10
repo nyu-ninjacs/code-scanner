@@ -1,4 +1,5 @@
 from datetime import datetime
+from collections import defaultdict
 import hashlib
 import json
 import time
@@ -91,7 +92,12 @@ def get_issues(issues):
         _id += 1
     return res
 
-
+def get_issues_dist(issues):
+    res = defaultdict(lambda: 0)
+    for issue in issues:
+        res[issue.OWASP] += 1
+    return res
+        
 
 def gen_sha256_hash(msg):
     """Generate the SHA256 hash of a message."""
