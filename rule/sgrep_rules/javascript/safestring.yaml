@@ -1,0 +1,14 @@
+rules:
+  - id: safestring
+    pattern-either:
+      - pattern: $X.SafeString(...)
+      - pattern: new Handlebars.SafeString(...)
+          
+    message: >-
+      Using the Handlebars SafeString function is dangerous as the data passed to it does not 
+      undergo any internal validation, so a malicious input can cause an XSS
+    languages:
+      - javascript
+    severity: ERROR
+    metadata:
+      owasp: 'A1: Injection'

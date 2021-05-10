@@ -46,7 +46,9 @@ class SGrep():
         result = json.loads(self.io_capture.getvalue())
         issues = []
         for find in result['results']:
-            i = Issue(Info(find['extra']['message'], ""), find['start']['line'], find['start']['col'], find['extra']['lines'])
+            i = Issue(Info(find['extra']['message'], ""), find['start']['line'], 
+                           find['start']['col'], find['extra']['lines'],
+                           owasp = find['extra']['metadata']['owasp'], severity = find['extra']['severity'])
             issues.append(i)
         return issues
         

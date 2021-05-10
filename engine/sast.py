@@ -4,11 +4,14 @@ class Info:
         self.Recommendation = recom
 
 class Issue:
-    def __init__(self, info, line, col, content):
+    def __init__(self, info, line, col, content, owasp = "", severity = ""):
         self.Info = info
         self.Line = line
         self.Column = col
         self.Content = content
+        self.OWASP = owasp
+        self.Severity = severity
+
 
 def AnalyzeFile(inputFile, rules):
     issues = []

@@ -22,4 +22,6 @@ class Result:
             print("At Line {}, Column {}:".format(issue.Line, issue.Column))
             print(issue.Content)
             print(" "*max(0, issue.Column-1)+"^")
-            print("Recommendation: ", info.Recommendation)
+            #print("Recommendation: ", info.Recommendation)
+            print("Severity: ", issue.Severity)
+            print("OWASP", issue.OWASP)

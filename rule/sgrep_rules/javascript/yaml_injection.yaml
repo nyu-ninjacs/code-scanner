@@ -1,0 +1,17 @@
+rules:
+  - id: yaml_injection
+    patterns:
+      - pattern-inside: |
+          require('js-yaml');
+          ...
+      - pattern: |
+          $X.load(...)
+          
+    message: >-
+      If a user-controlled data that has not been processed reaches the 'load' function, 
+      it is possible for an attacker to execute code within your application.
+    languages:
+      - javascript
+    severity: ERROR
+    metadata:
+      owasp: 'A8: Insecure Deserialization'

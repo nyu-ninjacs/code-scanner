@@ -1,0 +1,18 @@
+rules:
+  - id: deserialize
+    patterns:
+      - pattern-inside: |
+          require('node-serialize');
+          ...
+      - pattern: |
+          $X.unserialize(...)
+          
+    message: >-
+      Insecure deserialization often leads to remote code execution. Even if deserialization flaws do not 
+      result in remote code execution, they can be used to perform attacks, including replay attacks, 
+      injection attacks, and privilege escalation attacks.
+    languages:
+      - javascript
+    severity: ERROR
+    metadata:
+      owasp: 'A8: Insecure Deserialization'
