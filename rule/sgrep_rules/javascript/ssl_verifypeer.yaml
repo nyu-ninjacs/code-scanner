@@ -1,0 +1,14 @@
+rules:
+  - id: curl_ssl_verifypeer
+    pattern: |
+      $X(..., {SSL_VERIFYPEER : 0}, ...)
+          
+    message: >-
+      The SSL_VERIFYPEER option controls the internal Node.js library, causing HTTPS requests to stop 
+      checking if a secure cryptographic tunnel has actually been established between the servers, 
+      allowing an attacker to intercept client communication in open text.
+    languages:
+      - javascript
+    severity: ERROR
+    metadata:
+      owasp: 'A6: Security Misconfiguration'

@@ -1,0 +1,17 @@
+rules:
+  - id: tls_reject_unauth
+    patterns:
+      - pattern-either:
+          - pattern: |
+              $X.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+          - pattern: |
+              $X.env['NODE_TLS_REJECT_UNAUTHORIZED']= '0'
+          
+    message: >-
+      The NODE_TLS_REJECT_UNAUTHORIZED option being disabled allows the Node.js server 
+      to accept certificates that are self-signed, allowing an attacker to bypass the TLS security layer.
+    languages:
+      - javascript
+    severity: ERROR
+    metadata:
+      owasp: 'A6: Security Misconfiguration'

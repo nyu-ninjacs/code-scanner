@@ -1,0 +1,20 @@
+rules:
+  - id: weak_hash
+    patterns:
+      - pattern-inside: |
+          require('crypto');
+          ...
+      - pattern-either:
+        - pattern: |
+            $X.createHash("md5")
+        - pattern: |
+            $X.createHash("sha1")
+          
+    message: >-
+      Using the Handlebars SafeString function is dangerous as the data passed to it does not undergo any 
+      internal validation, so a malicious input can cause an XSS
+    languages:
+      - javascript
+    severity: WARNING
+    metadata:
+      owasp: 'A9: Using Components with Known Vulnerabilities'

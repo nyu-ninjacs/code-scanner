@@ -1,0 +1,117 @@
+rules:
+  - id: sql_injection
+    patterns:
+      - pattern-either:
+        - pattern-inside: function ($REQ, $RES, ...) {...}
+        - pattern-inside: function $FUNC($REQ, $RES, ...) {...}
+        - pattern-inside: $X = function $FUNC($REQ, $RES, ...) {...}
+        - pattern-inside: var $X = function $FUNC($REQ, $RES, ...) {...};
+        - pattern-inside: $APP.$METHOD(..., function $FUNC($REQ, $RES, ...) {...})
+      - pattern-either:
+          - pattern: |
+              $OBJ.findOne({$KEY : <... $REQ.$FOO.$BAR ...> }, ...);
+          - pattern: |
+              $OBJ.findOne({$KEY: <... $REQ.$FOO ...> }, ...);
+          - pattern: |
+              $INP = <... $REQ.$FOO.$BAR ...>;
+              ...
+              $OBJ.findOne({$KEY : <... $INP ...> }, ...);
+          - pattern: |
+              $INP = <... $REQ.$FOO ...>;
+              ...
+              $OBJ.findOne({$KEY: <... $INP ...> }, ...);
+          - pattern: |
+              $QUERY = {$KEY: <... $REQ.$FOO.$BAR ...>};
+              ...
+              $OBJ.findOne($QUERY, ...);
+          - pattern: |
+              $QUERY = {$KEY: <... $REQ.$FOO ...>};
+              ...
+              $OBJ.findOne($QUERY, ...);
+          - pattern: |
+              $INP = <... $REQ.$FOO.$BAR ...>;
+              ...
+              $QUERY = {$KEY : <... $INP ...> };
+              ...
+              $OBJ.findOne(<... $QUERY  ...>, ...);
+          - pattern: |
+              $INP = <... $REQ.$FOO ...>;
+              ...
+              $QUERY = {$KEY : <... $INP ...> };
+              ...
+              $OBJ.findOne(<... $QUERY  ...>, ...);
+          - pattern: |
+              $QUERY[$KEY] = <... $REQ.$FOO.$BAR ...>;
+              ...
+              $OBJ.findOne($QUERY, ...);
+          - pattern: |
+              $QUERY[$KEY] = <... $REQ.$FOO ...>;
+              ...
+              $OBJ.findOne($QUERY, ...);
+          - pattern: |
+              $INP = <... $REQ.$FOO.$BAR ...>;
+              ...
+              $QUERY[$KEY] = <... $INP ...>;
+              ...
+              $OBJ.findOne(<... $QUERY  ...>, ...);
+          - pattern: |
+              $INP = <... $REQ.$FOO ...>;
+              ...
+              $QUERY[$KEY] = <... $INP ...>;
+              ...
+              $OBJ.findOne(<... $QUERY  ...>, ...);
+           
+
+          - pattern: |
+              $OBJ.$FUNC({$where: <... $REQ.$FOO.$BAR ...>}, ...);
+          - pattern: |
+              $OBJ.$FUNC({$where: <... $REQ.$QUERY ...>}, ...);
+          - pattern: |
+              $NSQL = <... $REQ.$QUERY.$...>;
+              ...
+              $OBJ.$FUNC({$where: <... $NSQL ...>}, ...);
+          - pattern: |
+              $NSQL = <... $REQ.$QUERY ...>;
+              ...
+              $OBJ.$FUNC({$where: <... $NSQL ...>}, ...);
+          - pattern: |
+              $INP = $REQ.$FOO.$BAR;
+              ...
+              $QRY = {$where: <... $INP ...>};
+              ...
+              $OBJ.$FUNC(<... $QRY ...>, ...);
+          - pattern: |
+              $INP = $REQ.$FOO;
+              ...
+              $QRY = {$where: <... $INP ...>};
+              ...
+              $OBJ.$FUNC(<... $QRY ...>, ...);
+          - pattern: |
+              $QRY["$where"] = <... $REQ.$FOO ...>;
+              ...
+              $OBJ.$FUNC(<... $QRY ...>, ...);
+          - pattern: |
+              $QRY["$where"] = <... $REQ.$FOO.$BAR ...>;
+              ...
+              $OBJ.$FUNC(<... $QRY ...>, ...);
+          - pattern: |
+              $INP = $REQ.$FOO;
+              ...
+              $QRY["$where"] = <... $INP ...>;
+              ...
+              $OBJ.$FUNC(<... $QRY ...>, ...);
+          - pattern: |
+              $INP = $REQ.$FOO.$BAR;
+              ...
+              $QRY["$where"] = <... $INP ...>;
+              ...
+              $OBJ.$FUNC(<... $QRY ...>, ...);
+         
+    message: >-
+      Passing untreated parameters to queries in the database can cause an SQL injection, 
+      or even a NoSQL query injection.
+    languages:
+      - javascript
+    severity: ERROR
+    metadata:
+      owasp: 'A1: Injection'

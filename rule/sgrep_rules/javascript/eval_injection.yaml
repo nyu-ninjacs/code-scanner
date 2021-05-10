@@ -1,5 +1,5 @@
 rules:
-  - id: eval_nodejs
+  - id: eval_injection
     patterns:
       - pattern-either:
         - pattern-inside: function ($REQ, $RES, ...) {...}
@@ -57,13 +57,10 @@ rules:
               ...
               setInterval(..., <... $INP ...>, ...)
     message: >-
-      User controlled data in eval() or similar functions may result in Server
-      Side Injection or Remote Code Injection
+      The eval function is extremely dangerous, because if any user input that is not treated is passed to it, 
+      it may be possible to execute code remotely in the context of your application (RCE - Remote Code Executuion)
     languages:
       - javascript
     severity: ERROR
     metadata:
       owasp: 'A1: Injection'
-      cwe: >-
-        CWE-95: Improper Neutralization of Directives in Dynamically Evaluated
-        Code ('Eval Injection')
