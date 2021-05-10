@@ -3,7 +3,7 @@ from sast import Issue, Info
 def sort_issue(i):
     return i.Line, i.Column
 
-class Result:
+class Result(object):
     def __init__(self):
         self.Lines = 0
         self.Size = 0

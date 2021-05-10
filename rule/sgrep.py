@@ -22,7 +22,7 @@ class SGrep():
                 strict = False,
                 timeout_threshold = 3,
                 json_stats = False,
-                json_time = False,
+                # json_time = False,
                 output_per_finding_max_lines_limit = None,
             ),
             stdout=self.io_capture
@@ -35,7 +35,7 @@ class SGrep():
             jobs = 1,
             pattern=None,
             lang=None,
-            configs=["rule/sgrep_rules"],
+            configs=["../rule/sgrep_rules"],
             timeout=5,
             timeout_threshold = 3,
         )
