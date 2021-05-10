@@ -199,12 +199,8 @@
                         filename: $('#repo').val()
                     },
                     function (result) {
-                        if (result.status === "success") {
-                             window.location.href = window.location.href + result.url;
-                        } else {
-                            clearInterval(analyze);
-                            _("status").innerText = result.message;
-                        }
+                        window.location.href = window.location.href + "result/?filename=" + result;
+                        clearInterval(analyze);
                     });
                     analyze = analyzing();
                 });

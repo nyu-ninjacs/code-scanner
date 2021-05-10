@@ -15,3 +15,4 @@ rules:
     severity: ERROR
     metadata:
       owasp: 'A6: Security Misconfiguration'
+      cwe: "CWE-295: Improper Certificate Validation"
