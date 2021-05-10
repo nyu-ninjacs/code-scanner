@@ -123,15 +123,15 @@ JavascriptRules = [
 
 	Rule(
         'Allowing data from user input to be used as parameters for the \'needle.get\' method without treatment could cause a Server Side Request Forgery vulnerability',
-        'Cross-Site Scripting',
         '',
+        'Cross-Site Scripting',
         And = [re.compile(r'require\((?:\'|\")needle(?:\'|\")\)'), re.compile(r'\.get\(.*(req\.|req\.query|req\.body|req\.param)')]
     ),
 
 	Rule(
         'Allowing data from user input to reach the \'exec\' command without treatment could cause a Remote Code Execution vulnerability',
-        'Cross-Site Scripting',
         '',
+        'Cross-Site Scripting',
         And = [re.compile(r'require\((?:\'|")child_process(?:\'|")\)'), re.compile(r'\.exec\(.*(req\.|req\.query|req\.body|req\.param)')]
     )
 ]
