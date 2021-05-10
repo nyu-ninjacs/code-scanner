@@ -11,9 +11,10 @@ languages = {
     ".cs" : "Csharp"
 }
 class Scanner:
-    def __init__(self, filename, ruleBuilder):
+    def __init__(self, filename, ruleBuilder, sgrep_helper):
         self.filename = filename
         self.ruleBuilder = ruleBuilder
+        self.sgrep_helper = sgrep_helper
         self.result = Result()
 
     def Scan(self):
@@ -29,9 +30,14 @@ class Scanner:
         self.result.Lines = len(code.NewLineIndexes)
 
         # Set up rule sets to be used
-        ruleSet = ["core", languages[ext]]
+        if languages[ext] == "Javascript":
+            ruleSet = ["core"]
+        else:
+            ruleSet = ["core", languages[ext]]
         rules = self.ruleBuilder.Build(ruleSet)
 
         self.result.Issues = AnalyzeFile(code, rules)
+        if languages[ext] == "Javascript":
+            self.result.Issues += self.sgrep_helper.Scan(self.filename)
 
         return self.result

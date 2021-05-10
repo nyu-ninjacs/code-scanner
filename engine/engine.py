@@ -6,6 +6,5 @@ class Engine:
         self.sgrep_helper = sgrep_helper
 
     def Scan(self, filename):
-        result = Scanner(filename, self.ruleBuilder).Scan()
-        result.Issues += self.sgrep_helper.Scan(filename)
+        result = Scanner(filename, self.ruleBuilder, self.sgrep_helper).Scan()
         return result

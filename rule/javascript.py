@@ -13,7 +13,7 @@ JavascriptRules = [
         'Passing untreated parameters to queries in the database can cause an SQL injection, or even a NoSQL query injection.',
         '',
         'Injection',
-        ExactMatch = re.compile(r'\.(find|drop|create|explain|delete|count|bulk|copy).*\n*{.*\n*\$where(?:\'|\'|\):.*(?:req\.|req\.query|req\.body|req\.param)')
+        ExactMatch = re.compile(r'\.(find|drop|create|explain|delete|count|bulk|copy).*\n*{.*\n*\$where(?:\'|\'|\):.*(?:req\.|req\.query|req\.body|req\.param))')
     ),
 
 	Rule(
@@ -55,14 +55,14 @@ JavascriptRules = [
         'A hash algorithm used is considered weak and can cause hash collisions.',
         'It is always recommended to use some CHF (Cryptographic Hash Function), which is mathematically strong and not reversible. SHA512 would be the most recommended hash for storing the password and it is also important to adopt some type of Salt, so that the Hash is more secure.',
         'Security Misconfiguration',
-		ExactMatch = re.compile('createHash\((?:'|')md5(?:'|')')
+		ExactMatch = re.compile('createHash\((?:\'|\")md5(?:\'|\")')
     ),
 
 	Rule(
         'A hash algorithm used is considered weak and can cause hash collisions.',
         'It is always recommended to use some CHF (Cryptographic Hash Function), which is mathematically strong and not reversible. SHA512 would be the most recommended hash for storing the password and it is also important to adopt some type of Salt, so that the Hash is more secure.',
         'Security Misconfiguration',
-		ExactMatch = re.compile('createHash\((?:'|')sha1(?:'|')')
+		ExactMatch = re.compile('createHash\((?:\'|\")sha1(?:\'|\")')
     ),
 
 	Rule(
@@ -97,7 +97,7 @@ JavascriptRules = [
         'The HTTP header X-XSS-Protection activates protection on the user\'s browser side to mitigate XSS-based attacks. It is important to keep it activated whenever possible.',
         '',
         'Cross-Site Scripting',
-		ExactMatch = re.compile('(?:\[|)(?:'|')X-XSS-Protection(?:'|')(?:\]|)\s*=\s*(?:'|')*0(?:'|')')
+		ExactMatch = re.compile('(?:\[|)(?:\'|\")X-XSS-Protection(?:\'|\")(?:\]|)\s*=\s*(?:\'|\")*0(?:\'|\")')
     ),
 
 	Rule(
@@ -111,21 +111,21 @@ JavascriptRules = [
         'Allowing data from user input to be used as parameters for the unhandled \'request\' method could cause a Server Side Request Forgery vulnerability',
         '',
         'Cross-Site Scripting',
-        And = [re.compile(r'require\((?:\'|")request(?:\'|\")\)'), re.compile(r'request\(.*(req\.|req\.query|req\.body|req\.param)')]
+        And = [re.compile(r'require\((?:\'|\")request(?:\'|\")\)'), re.compile(r'request\(.*(req\.|req\.query|req\.body|req\.param)')]
     ),
 
 	Rule(
         'Allowing data from user input to be used as parameters for the \'request.get\' method without treatment could cause a Server Side Request Forgery vulnerability',
         '',
         'Cross-Site Scripting',
-        And = [re.compile(r'require\((?:\'|")request(?:\'|")\)'), re.compile(r'\.get\(.*(req\.|req\.query|req\.body|req\.param)')]
+        And = [re.compile(r'require\((?:\'|\")request(?:\'|\")\)'), re.compile(r'\.get\(.*(req\.|req\.query|req\.body|req\.param)')]
     ),
 
 	Rule(
         'Allowing data from user input to be used as parameters for the \'needle.get\' method without treatment could cause a Server Side Request Forgery vulnerability',
         'Cross-Site Scripting',
         '',
-        And = [re.compile(r'require\((?:\'|")needle(?:\'|")\)'), re.compile(r'\.get\(.*(req\.|req\.query|req\.body|req\.param)')]
+        And = [re.compile(r'require\((?:\'|\")needle(?:\'|\")\)'), re.compile(r'\.get\(.*(req\.|req\.query|req\.body|req\.param)')]
     ),
 
 	Rule(
