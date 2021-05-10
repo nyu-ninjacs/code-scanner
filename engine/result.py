@@ -25,3 +25,4 @@ class Result(object):
             #print("Recommendation: ", info.Recommendation)
             print("Severity: ", issue.Severity)
             print("OWASP", issue.OWASP)
+            print(issue.CWE)

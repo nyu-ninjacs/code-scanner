@@ -10,6 +10,7 @@ class Issue(object):
         self.Column = col
         self.Content = content
         self.OWASP = owasp
+        self.CWE = cwe
         self.Severity = severity
 
 
