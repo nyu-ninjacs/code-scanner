@@ -48,7 +48,9 @@ class SGrep():
         for find in result['results']:
             i = Issue(Info(find['extra']['message'], ""), find['start']['line'], 
                            find['start']['col'], find['extra']['lines'],
-                           owasp = find['extra']['metadata']['owasp'], severity = find['extra']['severity'])
+                           owasp = find['extra']['metadata']['owasp'], 
+                           cwe = find['extra']['metadata']['cwe'], 
+                           severity = find['extra']['severity'])
             issues.append(i)
         return issues
         
