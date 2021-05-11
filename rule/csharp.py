@@ -197,7 +197,7 @@ CsharpRules = [
         'Secure Flag is a policy for the browser to ensure that the cookie is sent over an encrypted channel, using the SSL protocol, that is, only via HTTPS. To set the transmission of cookies using SSL for an entire application, enable it in the application\'s configuration file, Web.config, which resides in the application\'s root directory. https://docs.microsoft.com/en-us/dotnet/api/system.web.httpcookie.secure?view=netframework-4.8',
         '',
         'Sensitive Data Exposure',
-        ExactMatch = re.compile(r'new\sHttpCookie(?:.*)*\.Secure\s+=\s+false')
+        ExactMatch = re.compile(r'new\sHttpCookie\(.*\)')
     ),
     
     Rule(
