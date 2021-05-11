@@ -3,4 +3,4 @@ __pycache__/
 
 pyvenv_config
 backup
-testdata
+testdata/
