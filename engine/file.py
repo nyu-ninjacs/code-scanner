@@ -24,7 +24,7 @@ class InputFile:
         newlineFinder = re.compile("\x0a")
 
         # Record positions of all lines
-        self.NewLineIndexes = [m.start(0)for m in newlineFinder.finditer(self.Content)]
+        self.NewLineIndexes = [m.start(0) for m in newlineFinder.finditer(self.Content)]
 
     # CollectEvidenceSample
     def Record(self, index):
