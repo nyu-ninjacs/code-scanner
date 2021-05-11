@@ -23,10 +23,18 @@ def run_rule(inputFile, finder, rule, info, fn):
 def run_and_rule(inputFile, rule, info):
     all_issues = []
     for expr in rule.And:
-        issues = run_rule(inputFile,expr, rule, info, None)
+        issues = run_rule(inputFile, expr, rule, info, None)
         if len(issues) == 0:
             return issues
         all_issues += issues
+    return all_issues
+
+def run_or_rule(inputFile, rule, info):
+    all_issues = []
+    for expr in rule.Or:
+        issues = run_rule(inputFile, expr, rule, info, None)
+        if len(issues) != 0:
+            all_issues += issues
     return all_issues
 
 
@@ -45,6 +53,8 @@ class Rule:
         info = Info(self.Description, self.Recommendation)
         if self.IsAndMatch():
             return run_and_rule(inputFile, self, info)
+        elif self.IsOrMatch():
+            return run_or_rule(inputFile, self, info)
         elif self.IsMatch():
             return run_rule(inputFile, self.ExactMatch, self, info, None)
         return []
@@ -54,3 +64,6 @@ class Rule:
     
     def IsAndMatch(self):
         return len(self.And) != 0
+
+    def IsOrMatch(self):
+        return len(self.Or) != 0

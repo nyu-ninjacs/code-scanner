@@ -1,30 +1,39 @@
 from rule import Rule
 import re
 
-CsharpRules = [
+CsharpRules = [  
+    # Rule(
+    #     'The dynamic value passed for the execution of the command must be validated. https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo?view=netframework-4.8',
+    #     '',
+    #     'Injection',
+    #     Or = [re.compile(r'ExecuteDataSet'), re.compile(r'ExecuteQuery')]
+    #     # Or = [re.compile(r'ExecuteDataSet'), re.compile(r'.*\.ExecuteQuery\(@".*\+')]
+    #     # ExactMatch = re.compile(r'.*\.ExecuteQuery\(@".*')
+    # ),
+
     Rule(
         'The dynamic value passed for the execution of the command must be validated. https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo?view=netframework-4.8',
         '',
         'Injection',
-        ExactMatch = re.compile(r'.*=\s+new\sProcess\(\);(?:*.*)*(.*\.StartInfo\.Arguments\s+=\s+.*".*\+)')
+        ExactMatch = re.compile(r'.*=\s+new\sProcess\(\);(?:.*)*(.*\.StartInfo\.Arguments\s+=\s+.*".*\+)')
     ),
 
     Rule(
-        'Passing untreated parameters to queries in the database can cause an SQL injection, or even a NoSQL query injection.',
+        'The application appears to write confidential information to log files, creating a risk of theft of credentials and / or private information. https://cwe.mitre.org/data/definitions/532.html',
         '',
         'Injection',
         ExactMatch = re.compile(r'(?:\bLogError|\bLogger|\blogger|\bLogging|\blogging|System\.Diagnostics\.Debug|System\.Diagnostics\.Trace).*\(.*\+\s*(?:pass|pwd|passwd|password|key|cert|privKey|privateKey)')
     ),
 
 	Rule(
-        'The setTimeout function is very dangerous because it can interpret a string as code.',
+        'Validation of user entries has been disabled. The ASP.NET request validation feature proactively prevents code injection attacks by not allowing unencrypted HTML content to be processed by the server, unless the developer decides to allow that content. When request validation is disabled, content can be sent to a page; it is the responsibility of the page developer to ensure that the content is encoded or processed correctly. https://docs.microsoft.com/en-us/aspnet/whitepapers/request-validation.',
         '',
         'Security Misconfiguration',
         ExactMatch = re.compile(r'<pages(?:>|)\s+.*validateRequest=[\'"]+false')
     ),
 
     Rule(
-        'The setInterval function is very dangerous because it can interpret a string as code.',
+        'The application uses the potentially dangerous Html.Raw construct in conjunction with a user-supplied variable. The recommendation is to avoid using HTML assembly, but if it is extremely necessary to allow Html, we suggest the following: support only a fixed subset of Html, after the user submits content, analyze the Html and filter it in a whitelist of allowed tags and attributes. Be very careful when filtering and eliminating anything you are unsure of. https://owasp.org/www-community/attacks/xss/.',
         '',
         'Cross-Site Scripting XSS',
         ExactMatch = re.compile(r'\bHtml\b\.Raw\(')
@@ -97,14 +106,14 @@ CsharpRules = [
         'The potentially unsafe HTTP request entry reaches an XPath query. The dynamic value passed to the XPath query must be validated. https://docs.microsoft.com/en-us/visualstudio/code-quality/ca3008?view=vs-2019',
         '',
         'Injection',
-        ExactMatch = re.compile(r'.*=\s+new\sXmlDocument\s*(?:\(\)|{.*});(?:*.*)*(.*\.SelectNodes\(\s*.*".*\+)')
+        ExactMatch = re.compile(r'.*=\s+new\sXmlDocument\s*(?:\(\)|{.*});(?:.*)*(.*\.SelectNodes\(\s*.*".*\+)')
     ),
-    
+
     Rule(
         'If you use unsafe DtdProcessing instances or refer to sources from external entities, the analyzer can accept untrusted input and disclose confidential information to attackers. The operation may be vulnerable to processing XML eXternal Entity (XXE) .https: //docs.microsoft.com/en-us/visualstudio/code-quality/ca3075? View = vs-2019',
         '',
         'XML External Entities (XXE)',
-        ExactMatch = re.compile(r'.*=\s+new\sXmlReaderSettings\s*(?:\(\)|{.*});(?:*.*)*(.*\s+=\s+DtdProcessing\.Parse;)')
+        ExactMatch = re.compile(r'.*=\s+new\sXmlReaderSettings\s*(?:\(\)|{.*});(?:.*)*(.*\s+=\s+DtdProcessing\.Parse;)')
     ),
     
     Rule(
@@ -118,28 +127,28 @@ CsharpRules = [
         'A potential Cross-Site Scripting (XSS) was found. The endpoint returns a variable from the client entry that has not been coded. Always encode untrusted input before output, regardless of validation or cleaning performed. https://docs.microsoft.com/en-us/aspnet/core/security/cross-site-scripting?view=aspnetcore-3.1',
         '',
         'Cross-Site Scripting XSS',
-        ExactMatch = re.compile(r'(?:public\sclass\s.*Controller|.*\s+:\s+Controller)(?:*.*)*return\s+.*".*\+')
+        ExactMatch = re.compile(r'(?:public\sclass\s.*Controller|.*\s+:\s+Controller)(?:.*)*return\s+.*".*\+')
     ),
     
     Rule(
         'The potentially unsafe HTTP request entry reaches an LDAP instruction. The dynamic value passed to the LDAP query must be validated. For the user-controlled portion of LDAP instructions, consider one of the following: Allow only a safe list of non-special characters; Do not allow special characters; Escape from special characters. https://docs.microsoft.com/en-us/visualstudio/code-quality/ca3005?view=vs-2019',
         '',
         'Injection',
-        ExactMatch = re.compile(r'.*=\s+new\sDirectorySearcher\s*(?:\(\)|{.*});(?:*.*)*(.*\.Filter\s+=\s+".*\+)')
+        ExactMatch = re.compile(r'.*=\s+new\sDirectorySearcher\s*(?:\(\)|{.*});(?:.*)*(.*\.Filter\s+=\s+".*\+)')
     ),
     
     Rule(
         'A weak password can be guessed or forced. PasswordValidator must have at least four or five requirements to improve security (RequiredLength, RequireDigit, RequireLowercase, RequireUppercase and / or RequireNonLetterOrDigit).',
         '',
         'Broken Authentication',
-        ExactMatch = re.compile(r'new\s+PasswordValidator(?:*.*)*{')
+        ExactMatch = re.compile(r'new\s+PasswordValidator(?:.*)*{')
     ),
     
     Rule(
         'A possible SQL Injection vulnerability was found. SQL injection failures are introduced when software developers create dynamic database queries that include user-supplied input. Always validate user input by testing type, length, shape and reach. When implementing precautions against malicious entry, consider your application\'s architecture and deployment scenarios. Remember that programs designed to run in a secure environment can eventually be copied to an unsafe environment.https: //docs.microsoft.com/en-us/sql/relational-databases/security/sql-injection? view = sql-server-ver15',
         '',
         'Injection',
-        Or = [re.compile(r'.*\s+new\sOdbcCommand\(.*".*\+(?:.**)*.ExecuteReader\('), re.compile(r'.*\s+new\sSqlCommand\(.*".*\+'), re.compile(r'.*\.ExecuteDataSet\(.*".*\+'), re.compile(r'.*\.ExecuteQuery\(@".*\+')]
+        Or = [re.compile(r'.*\s+new\sOdbcCommand\(.*".*\+(?:.*)*.ExecuteReader\('), re.compile(r'.*\s+new\sSqlCommand\(.*".*\+'), re.compile(r'.*\.ExecuteDataSet\(.*".*\+'), re.compile(r'ExecuteQuery\(@".*')]
     ),
     
     Rule(
@@ -153,14 +162,14 @@ CsharpRules = [
         'MD5 or SHA1 can cause collisions and are considered weak hashing algorithms. A weak encryption scheme may be subject to brute force attacks that have a reasonable chance of success using current methods and resources of attack. Use an encryption scheme that is currently considered strong by experts in the field. https://docs.microsoft.com/en-us/visualstudio/code-quality/ca5350?view=vs-2019 https://docs.microsoft.com/en-us/visualstudio/code-quality/ca5351?view = vs-2019',
         '',
         'Insecure Storage',
-        Or = [re.compile(r''), re.compile(r''), re.compile(r''), re.compile(r'')]
+        Or = [re.compile(r'=\s+new\s+SHA1CryptoServiceProvider\('), re.compile(r'=\s+new\s+MD5CryptoServiceProvider\(')]
     ),
     
     Rule(
         'DES / 3DES is considered a weak cipher for modern applications. A weak encryption scheme may be subject to brute force attacks that have a reasonable chance of success using current methods and resources of attack. Use an encryption scheme that is currently considered strong by experts in the field. Currently, NIST recommends using AES block ciphers. http://www.nist.gov/itl/fips/060205_des.cfm https://www.nist.gov/publications/advanced-encryption-standard-aes https://docs.microsoft.com/en-us/ visualstudio / code-quality / ca5351? view = vs-2019.',
         '',
         'Insecure Storage',
-        Or = [re.compile(r''), re.compile(r''), re.compile(r''), re.compile(r'')]
+        Or = [re.compile(r'=\s+new\s+TripleDESCryptoServiceProvider\('), re.compile(r'=\s+new\s+DESCryptoServiceProvider\('), re.compile(r'=\s+TripleDES\.Create\('), re.compile(r'=\s+DES\.Create\(')]
     ),
 
     Rule(
@@ -188,14 +197,14 @@ CsharpRules = [
         'Secure Flag is a policy for the browser to ensure that the cookie is sent over an encrypted channel, using the SSL protocol, that is, only via HTTPS. To set the transmission of cookies using SSL for an entire application, enable it in the application\'s configuration file, Web.config, which resides in the application\'s root directory. https://docs.microsoft.com/en-us/dotnet/api/system.web.httpcookie.secure?view=netframework-4.8',
         '',
         'Sensitive Data Exposure',
-        ExactMatch = re.compile(r'new\sHttpCookie(?:.**)*\.Secure\s+=\s+false')
+        ExactMatch = re.compile(r'new\sHttpCookie(?:.*)*\.Secure\s+=\s+false')
     ),
     
     Rule(
         'Cookies that do not have the HttpOnly flag set are available for JavaScript running on the same domain. The assigned value must be \'true\' to enable the HttpOnly attribute and cannot be accessed through a client-side script; otherwise, \'false\'. The default is \'false\'. When a user is the target of an XSS attack, the attacker would benefit from obtaining confidential information or even progressing to a session hijack. https://docs.microsoft.com/en-us/dotnet/api/system.web.httpcookie.httponly?view=netframework-4.8',
         '',
         'Cross-Site Scripting XSS',
-        ExactMatch = re.compile(r'(?:.*\s+new\sHttpCookie(?:.**)*.HttpOnly\s*=\s*false|httpOnlyCookies\s*=\s*"false")')
+        ExactMatch = re.compile(r'(?:.*\s+new\sHttpCookie(?:.*)*.HttpOnly\s*=\s*false|httpOnlyCookies\s*=\s*"false")')
     ),
     
     Rule(
@@ -209,7 +218,7 @@ CsharpRules = [
         'Request validation is disabled. Request validation allows filtering of some XSS standards sent to the application. https://docs.microsoft.com/en-us/dotnet/api/system.web.mvc.validateinputattribute?view=aspnet-mvc-5.2',
         '',
         'Unvalidated Input',
-        ExactMatch = re.compile(r'(?:public\s+class\s+.*Controller|.*\s+:\s+Controller)(?:*.*)*\[ValidateInput\(false\)\]')
+        ExactMatch = re.compile(r'(?:public\s+class\s+.*Controller|.*\s+:\s+Controller)(?:.*)*\[ValidateInput\(false\)\]')
     ),
     
     Rule(
@@ -244,7 +253,7 @@ CsharpRules = [
         'The \'RequiredLength\' property must be set to a minimum value of 8.',
         '',
         'Broken Authentication',
-        ExactMatch = re.compile(r'new\s+PasswordValidator(?:*.*)*\{(?:*.*)*RequiredLength\s+=\s+[1-7]')
+        ExactMatch = re.compile(r'new\s+PasswordValidator(?:.*)*\{(?:.*)*RequiredLength\s+=\s+[1-7]')
     ),
     
     Rule(
@@ -265,14 +274,14 @@ CsharpRules = [
         'The [OutputCache] annotation will disable the [Authorize] annotation for requests after the first.',
         'Do not store confidential information unnecessarily in the cache. Protect the information stored in the cache.',
         'Sensitive Data Exposure',
-        ExactMatch = re.compile(r'(?:public\s+class\s+.*Controller|.*\s+:\s+Controller)(?:*.*)*\[OutputCache\]')
+        ExactMatch = re.compile(r'(?:public\s+class\s+.*Controller|.*\s+:\s+Controller)(?:.*)*\[OutputCache\]')
     ),
     
     Rule(
         'The Anti-forgery token is missing. Without this validation, an attacker could send a link to the victim and, visiting the malicious link, a web page would trigger a POST request (because it is a blind attack - the attacker does not see a response to the triggered request and does not have the use of the GET request and GET requests must not change a server state by default) for the site. The victim would not be able to recognize that an action is taken in the background, but his cookie would be sent automatically if he was authenticated on the website. This attack requires no special interaction other than visiting a website.',
         'To help prevent CSRF attacks, ASP.NET MVC uses anti-forgery tokens, also called request verification tokens.',
         'Cross-Site Request Forgery (CSRF)',
-        ExactMatch = re.compile(r'(?:public\s+class\s+.*Controller|.*\s+:\s+Controller)(?: *.*)*'),
+        ExactMatch = re.compile(r'(?:public\s+class\s+.*Controller|.*\s+:\s+Controller)(?: .*)*'),
         NotOr = [re.compile(r'\[ValidateAntiForgeryToken\]')]
     )
 ]

@@ -22,7 +22,7 @@ class SGrep():
                 strict = False,
                 timeout_threshold = 3,
                 json_stats = False,
-                # json_time = False,
+                json_time = False,
                 output_per_finding_max_lines_limit = None,
             ),
             stdout=self.io_capture
