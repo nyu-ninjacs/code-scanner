@@ -56,7 +56,7 @@ def reconstruct(filename):
     filename = "../testdata/" + filename
     f = open(filename + "_scan_result.txt", "r")
     result = jsonpickle.decode(f.read())
-    print(result.Issues[0].Info.Description)
+    print(result)
     return result
 
 def get_metrics(res):

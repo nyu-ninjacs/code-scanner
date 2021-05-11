@@ -27,9 +27,10 @@ def scan_directory(dirname):
     filename = "../testdata/" + dirname
     f = open( filename + "_scan_result.txt", "w")
     for name in files:
+        print("Filename: " + name)
         result = eng.Scan(name)
         results.append(result)
     json_str = jsonpickle.encode(results)
-    f.write(results)
+    f.write(json_str)
     f.close()
     return dirname

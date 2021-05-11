@@ -21,7 +21,7 @@ Scan Results
               <div class="card-body">
                <div class="ml-1">
                 <p><span class="badge badge-info">File</span>  <h6>{{ scan_file }}</h6> </p>
-                <p><span class="badge badge-info">Total Files Scanned</span>  <h6>{{ 1 }} </h6> </p>
+                <p><span class="badge badge-info">Total Files Scanned</span>  <h6>{{ total_files }} </h6> </p>
                   <span class="badge badge-danger">Total Issues</span> <h2> {{ total_issues }}  </h2>
                 </div>
               </div>
@@ -136,6 +136,8 @@ Scan Results
           </div>
         </div>
 
+        
+
 
   {% endblock %}
 
@@ -228,7 +230,7 @@ Scan Results
     var ctx2 = document.getElementById("Nos").getContext('2d');
     var dodata = {
     datasets: [{
-        data: [{{ 1 }}, {{ total_issues }}],
+        data: [{{ total_files }}, {{ total_issues }}],
         backgroundColor: [
         'rgb(70, 191, 189)',
         "#fd5d93",

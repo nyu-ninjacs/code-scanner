@@ -11,6 +11,8 @@ from sast import *
 class SGrep():
     def __init__(self):
         util.set_flags(False, True, False)
+
+    def Scan(self, filepath):
         self.io_capture = StringIO()
 
         self.output = OutputHandler(
@@ -27,8 +29,7 @@ class SGrep():
             ),
             stdout=self.io_capture
         )
-    
-    def Scan(self, filepath):
+        
         semgrep_main.main(
             output_handler = self.output,
             target = [filepath],
@@ -53,4 +54,3 @@ class SGrep():
                            severity = find['extra']['severity'])
             issues.append(i)
         return issues
-        
