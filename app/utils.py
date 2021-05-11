@@ -56,7 +56,7 @@ def reconstruct(filename):
     filename = "../testdata/" + filename
     f = open(filename + "_scan_result.txt", "r")
     result = jsonpickle.decode(f.read())
-    print(result.Issues[0].Info.Description)
+    print(result)
     return result
 
 def get_metrics(res):
@@ -78,16 +78,17 @@ def get_issues(issues):
     _id = 0
     for item in issues:
         new_dict = {}
-        new_dict['id'] = _id
+        new_dict['id'] = str(_id)
         new_dict['description'] = item.Info.Description
         new_dict['recommendation'] = item.Info.Recommendation
-        new_dict['loc'] = str(item.Line) + ', ' + str(item.Column)
+        new_dict['loc'] = '[' + str(item.Line) + ', ' + str(item.LineEnd) + ']'
         new_dict['line'] = item.Line
         new_dict['column'] = item.Column
         new_dict['text'] = item.Content
         new_dict['owasp'] = item.OWASP
         new_dict['severity'] = item.Severity
         new_dict['cwe'] = item.CWE
+        new_dict['filename'] = item.Filename
         res.append(new_dict)
         _id += 1
     return res

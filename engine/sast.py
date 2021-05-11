@@ -4,12 +4,13 @@ class Info(object):
         self.Recommendation = recom
 
 class Issue(object):
-    def __init__(self, info, line, col, content, owasp = "", cwe= "", severity = ""):
-
+    def __init__(self, info, line, col, content, lineEnd = "", filename = "", owasp = "", cwe= "", severity = ""):
         self.Info = info
         self.Line = line
+        self.LineEnd = lineEnd
         self.Column = col
         self.Content = content
+        self.Filename = filename
         self.OWASP = owasp
         self.CWE = cwe
         self.Severity = severity
