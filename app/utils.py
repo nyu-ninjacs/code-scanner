@@ -81,7 +81,7 @@ def get_issues(issues):
         new_dict['id'] = str(_id)
         new_dict['description'] = item.Info.Description
         new_dict['recommendation'] = item.Info.Recommendation
-        new_dict['loc'] = '[' + str(item.Line) + ', ' + str(item.LineEnd - 1) + ']'
+        new_dict['loc'] = '[' + str(item.Line) + ', ' + str(item.LineEnd) + ']'
         new_dict['line'] = item.Line
         new_dict['column'] = item.Column
         new_dict['text'] = item.Content
