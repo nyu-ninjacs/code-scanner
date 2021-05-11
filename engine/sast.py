@@ -1,15 +1,17 @@
-class Info:
+class Info(object):
     def __init__(self, desc, recom):
         self.Description = desc
         self.Recommendation = recom
 
-class Issue:
-    def __init__(self, info, line, col, content, owasp = "", severity = ""):
+class Issue(object):
+    def __init__(self, info, line, col, content, owasp = "", cwe= "", severity = ""):
+
         self.Info = info
         self.Line = line
         self.Column = col
         self.Content = content
         self.OWASP = owasp
+        self.CWE = cwe
         self.Severity = severity
 
 

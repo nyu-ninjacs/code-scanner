@@ -1,1 +1,6 @@
 __pycache__/
+.vscode
+
+pyvenv_config
+backup
+testdata/

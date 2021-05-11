@@ -42,6 +42,7 @@ rules:
       Avoid parsing not verified user data with XML Parser.
     languages:
       - javascript
-    severity: ERROR
+    severity: WARNING
     metadata:
       owasp: 'A4: XML External Entities (XXE)'
+      cwe: "CWE-611: Improper Restriction of XML External Entity Reference"

@@ -64,3 +64,4 @@ rules:
     severity: ERROR
     metadata:
       owasp: 'A1: Injection'
+      cwe: "CWE-95: Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection')"

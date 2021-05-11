@@ -22,7 +22,7 @@ class SGrep():
                 strict = False,
                 timeout_threshold = 3,
                 json_stats = False,
-                json_time = False,
+                # json_time = False,
                 output_per_finding_max_lines_limit = None,
             ),
             stdout=self.io_capture
@@ -35,7 +35,7 @@ class SGrep():
             jobs = 1,
             pattern=None,
             lang=None,
-            configs=["rule/sgrep_rules"],
+            configs=["../rule/sgrep_rules"],
             timeout=5,
             timeout_threshold = 3,
         )
@@ -48,7 +48,9 @@ class SGrep():
         for find in result['results']:
             i = Issue(Info(find['extra']['message'], ""), find['start']['line'], 
                            find['start']['col'], find['extra']['lines'],
-                           owasp = find['extra']['metadata']['owasp'], severity = find['extra']['severity'])
+                           owasp = find['extra']['metadata']['owasp'], 
+                           cwe = find['extra']['metadata']['cwe'], 
+                           severity = find['extra']['severity'])
             issues.append(i)
         return issues
         

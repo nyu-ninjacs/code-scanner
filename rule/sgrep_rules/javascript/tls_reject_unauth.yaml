@@ -12,6 +12,7 @@ rules:
       to accept certificates that are self-signed, allowing an attacker to bypass the TLS security layer.
     languages:
       - javascript
-    severity: ERROR
+    severity: WARNING
     metadata:
       owasp: 'A6: Security Misconfiguration'
+      cwe: "CWE-295: Improper Certificate Validation"

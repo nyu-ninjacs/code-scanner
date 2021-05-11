@@ -1,4 +1,5 @@
 import re
+import engine
 from sast import Info
 from file import InputFile
 from sast import Issue

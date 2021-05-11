@@ -13,6 +13,7 @@ rules:
       injection attacks, and privilege escalation attacks.
     languages:
       - javascript
-    severity: ERROR
+    severity: WARNING
     metadata:
       owasp: 'A8: Insecure Deserialization'
+      cwe: 'CWE-502: Deserialization of Untrusted Data'
