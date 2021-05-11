@@ -12,6 +12,6 @@ if __name__ == "__main__":
         exit(0)
 
     # Replace 0 with rule builder
-    eng = Engine(RuleBuilder(), SGrep())
+    eng = Engine(RuleBuilder(), SGrep("rule/sgrep_rules"))
     result = eng.Scan(sys.argv[1])
     result.ReportConsole()

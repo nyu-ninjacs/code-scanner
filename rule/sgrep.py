@@ -9,7 +9,8 @@ from file import InputFile
 from sast import *
 
 class SGrep():
-    def __init__(self):
+    def __init__(self, ruleset):
+        self.ruleset = ruleset
         util.set_flags(False, True, False)
         try:
             self.setting = OutputSettings(
@@ -20,7 +21,7 @@ class SGrep():
                 strict = False,
                 timeout_threshold = 3,
                 json_stats = False,
-                json_time = False,
+                # json_time = False,
                 output_per_finding_max_lines_limit = None,
             )
         except:
@@ -47,7 +48,7 @@ class SGrep():
             jobs = 1,
             pattern=None,
             lang=None,
-            configs=["../rule/sgrep_rules"],
+            configs=[self.ruleset],
             timeout=5,
             timeout_threshold = 3,
         )

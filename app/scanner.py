@@ -7,7 +7,7 @@ from os.path import isfile, join
 import jsonpickle
 
 def scan(filename):
-    eng = Engine(RuleBuilder(), SGrep())
+    eng = Engine(RuleBuilder(), SGrep("../rule/sgrep_rules"))
     fname = filename
     filename = "../testdata/" + filename
     result = eng.Scan(filename)
