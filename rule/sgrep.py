@@ -29,7 +29,7 @@ class SGrep():
             ),
             stdout=self.io_capture
         )
-        
+
         semgrep_main.main(
             output_handler = self.output,
             target = [filepath],
@@ -41,14 +41,16 @@ class SGrep():
             timeout_threshold = 3,
         )
         self.output.close()
-        return self.format()
+        return self.format(filepath)
     
-    def format(self):
+    def format(self, filepath):
         result = json.loads(self.io_capture.getvalue())
         issues = []
         for find in result['results']:
             i = Issue(Info(find['extra']['message'], ""), find['start']['line'], 
                            find['start']['col'], find['extra']['lines'],
+                           lineEnd = find['end']['line'],
+                           filename = filepath,
                            owasp = find['extra']['metadata']['owasp'], 
                            cwe = find['extra']['metadata']['cwe'], 
                            severity = find['extra']['severity'])

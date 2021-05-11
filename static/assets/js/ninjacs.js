@@ -3,10 +3,9 @@ $(document).ready(function () {
 
 
 //View file
-window.view = function(path, line, filename, scan_hash) {
+window.view = function(path, line, filename) {
     $.post('/view_file', {
         path: path,
-        scan_hash: scan_hash
     },
         function (result) {
             var toarr = JSON.parse(line);

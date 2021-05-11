@@ -13,8 +13,6 @@ from .scanner import *
 # from web.git import clone
 from web.dashboard import (
     home,
-    issue_hide,
-    issue_revert,
     scan_result,
     scans,
     view_file,
@@ -91,4 +89,7 @@ def show_result():
     """Show a scan result."""
     return scan_result(request.args.get('filename'))
 
+@app.route('/view_file', methods=['POST'])
+def view():
+    return view_file(request)
 
