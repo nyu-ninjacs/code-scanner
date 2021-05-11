@@ -176,20 +176,27 @@ Scan Results
                 hoverBackgroundColor: gradientStroke,
                 data: [
                 {% for v in issues_dist.values() %}
-                  {{ v }}
+                  {{ v }},
                 {% endfor %}
                 ],
             }
         ]
     };
     var option = {
-    animation: {
-      duration:5000
-    },
-    responsive: true,
-    legend: {
-    display: false
-    }
+      animation: {
+        duration:5000
+      },
+      responsive: true,
+      legend: {
+        display: false
+      },
+      scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+      }
     };
 
     var myBarChart = Chart.Bar(canvas,{
