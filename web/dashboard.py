@@ -27,11 +27,19 @@ def scan_result(filename):
     """Get Scan result."""
     res = utils.reconstruct(filename)
     total_sev, total_num_issues, combined_issues = {}, 0, []
-    for item in res:
-        sev, issues = utils.get_metrics(item)
+    if isinstance(res, list):
+        total_files = len(res)
+        for item in res:
+            sev, issues = utils.get_metrics(item)
+            total_sev.update(sev)
+            total_num_issues += issues
+            combined_issues += item.Issues
+    else:
+        total_files = 1
+        sev, issues = utils.get_metrics(res)
         total_sev.update(sev)
         total_num_issues += issues
-        combined_issues += item.Issues
+        combined_issues += res.Issues
     context = dict()
     context['version'] = "1.0"
     context['year'] = utils.year()
@@ -43,7 +51,7 @@ def scan_result(filename):
     context['templates'] = {}
     context['issues'] = utils.get_issues(combined_issues)
     context['issues_dist'] = utils.get_issues_dist(combined_issues)
-    context['total_files'] = len(res)
+    context['total_files'] = total_files
     print(context)
     return render_template('scan_result.html', **context)
 

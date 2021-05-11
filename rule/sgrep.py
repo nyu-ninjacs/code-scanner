@@ -11,12 +11,8 @@ from sast import *
 class SGrep():
     def __init__(self):
         util.set_flags(False, True, False)
-
-    def Scan(self, filepath):
-        self.io_capture = StringIO()
-
-        self.output = OutputHandler(
-            OutputSettings(
+        try:
+            self.setting = OutputSettings(
                 output_format = OutputFormat.JSON,
                 output_destination = None,
                 error_on_findings = False,
@@ -26,9 +22,24 @@ class SGrep():
                 json_stats = False,
                 # json_time = False,
                 output_per_finding_max_lines_limit = None,
-            ),
-            stdout=self.io_capture
-        )
+            )
+        except:
+            self.setting = OutputSettings(
+                output_format = OutputFormat.JSON,
+                output_destination = None,
+                error_on_findings = False,
+                verbose_errors = False,
+                strict = False,
+                timeout_threshold = 3,
+                json_stats = False,
+                json_time = False,
+                output_per_finding_max_lines_limit = None,
+            )
+
+    def Scan(self, filepath):
+        self.io_capture = StringIO()
+        
+        self.output = OutputHandler(self.setting, stdout=self.io_capture)
 
         semgrep_main.main(
             output_handler = self.output,
