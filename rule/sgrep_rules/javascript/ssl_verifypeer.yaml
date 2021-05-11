@@ -9,7 +9,7 @@ rules:
       allowing an attacker to intercept client communication in open text.
     languages:
       - javascript
-    severity: ERROR
+    severity: WARNING
     metadata:
       owasp: 'A6: Security Misconfiguration'
       cwe: "CWE-599: Missing Validation of OpenSSL Certificate"

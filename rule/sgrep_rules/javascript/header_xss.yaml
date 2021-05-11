@@ -129,7 +129,7 @@ rules:
       When passing user data directly to the HTTP response headers, it is possible for an XSS to become viable.
     languages:
       - javascript
-    severity: ERROR
+    severity: INFO
     metadata:
       owasp: 'A7: XSS'
       cwe: "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"

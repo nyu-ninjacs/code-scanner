@@ -38,7 +38,7 @@ rules:
       It is important to keep it activated whenever possible.
     languages:
       - javascript
-    severity: ERROR
+    severity: INFO
     metadata:
       cwe: "CWE-693: Protection Mechanism Failure"
       owasp: 'A6: Security Misconfiguration'

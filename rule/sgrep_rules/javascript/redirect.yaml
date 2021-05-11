@@ -25,7 +25,7 @@ rules:
       Using the 'redirect' function can cause an Open Redirect.
     languages:
       - javascript
-    severity: ERROR
+    severity: WARNING
     metadata:
       owasp: 'A1: Injection'
       cwe: "CWE-601: URL Redirection to Untrusted Site ('Open Redirect')"

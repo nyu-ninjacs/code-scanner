@@ -123,7 +123,7 @@ rules:
       can cause a Directory Traversal attack.
     languages:
       - javascript
-    severity: ERROR
+    severity: WARNING
     metadata:
       owasp: 'A5: Broken Access Control'
       cwe: "CWE-23: Relative Path Traversal"
