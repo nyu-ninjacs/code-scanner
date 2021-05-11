@@ -1,6 +1,8 @@
 from engine import Engine
 from builder import RuleBuilder
 from sgrep import SGrep
+from os import listdir
+from os.path import isfile, join
 
 import jsonpickle
 
@@ -14,3 +16,20 @@ def scan(filename):
     f.write(json_str)
     f.close()
     return fname
+
+def scan_directory(dirname):
+    print(dirname)
+    files = [dirname + "/" + f for f in listdir(dirname) if isfile(join(dirname, f))]
+    dirname = dirname.split('/')[-1]
+    print(files)
+    eng = Engine(RuleBuilder(), SGrep())
+    results = []
+    filename = "../testdata/" + dirname
+    f = open( filename + "_scan_result.txt", "w")
+    for name in files:
+        result = eng.Scan(name)
+        results.append(result)
+    json_str = jsonpickle.encode(results)
+    f.write(results)
+    f.close()
+    return dirname

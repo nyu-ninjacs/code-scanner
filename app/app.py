@@ -6,6 +6,7 @@ import re
 import os
 
 from flask import Flask, request
+import app.settings as settings
 from .scanner import *
 
 # from web.upload import handle_upload
@@ -19,11 +20,17 @@ from web.dashboard import (
     view_file,
 )
 
+from web.upload import (
+    handle_upload
+)
+
 from app import utils
 
 app = Flask(__name__,
             template_folder='../templates',
             static_folder='../static')
+
+app.config['UPLOAD_FOLDER'] = settings.UPLOAD_FOLDER
 
 @app.template_filter('slugify')
 def _slugify(string):
