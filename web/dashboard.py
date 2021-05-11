@@ -19,7 +19,7 @@ def home():
 
 
 def scans():
-    """Recent Scans view in nodejsscan."""
+    """Recent Scans view in ninjacs."""
     return render_template('scans.html')
 
 
