@@ -22,7 +22,7 @@ def scan_directory(dirname):
     files = [dirname + "/" + f for f in listdir(dirname) if isfile(join(dirname, f))]
     dirname = dirname.split('/')[-1]
     print(files)
-    eng = Engine(RuleBuilder(), SGrep())
+    eng = Engine(RuleBuilder(), SGrep("../rule/sgrep_rules"))
     results = []
     filename = "../testdata/" + dirname
     f = open( filename + "_scan_result.txt", "w")

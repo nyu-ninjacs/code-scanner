@@ -2,10 +2,11 @@ import re
 
 # EvidenceSample
 class Warning:
-    def __init__(self, line, column, content):
+    def __init__(self, line, column, content, lineEnd):
         self.Line = line
         self.Column = column
         self.Content = content
+        self.LineEnd = lineEnd
 
 class InputFile:
     def __init__(self, filename):
@@ -27,9 +28,9 @@ class InputFile:
         self.NewLineIndexes = [m.start(0) for m in newlineFinder.finditer(self.Content)]
 
     # CollectEvidenceSample
-    def Record(self, index):
-        line, column = self.findLineAndColumn(index)
-
+    def Record(self, start_index, end_index):
+        line, column = self.findLineAndColumn(start_index)
+        lineEnd,_ = self.findLineAndColumn(end_index)
         if line < 0:
             print("Unexpected error in engine/file.py/record, line not found")
             exit(0)
@@ -38,10 +39,10 @@ class InputFile:
             start = 0
         else:
             start = self.NewLineIndexes[line - 1]
-        end = self.NewLineIndexes[line]
+        end = self.NewLineIndexes[lineEnd]
         lineContent = self.Content[start:end].replace("\r","").replace("\n","")
 
-        return Warning(line+1, column, lineContent)
+        return Warning(line+1, column, lineContent, lineEnd+1)
 
     def findLineAndColumn(self, index):
         # Find line id

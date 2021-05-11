@@ -31,9 +31,9 @@ class Scanner:
 
         # Set up rule sets to be used
         if languages[ext] == "Javascript":
-            ruleSet = ["core"]
+            ruleSet = ["Core"]
         else:
-            ruleSet = ["core", languages[ext]]
+            ruleSet = ["Core", languages[ext]]
         rules = self.ruleBuilder.Build(ruleSet)
 
         self.result.Issues = AnalyzeFile(code, rules)

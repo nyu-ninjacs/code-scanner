@@ -15,8 +15,9 @@ def run_rule(inputFile, finder, rule, info, fn):
             reportIssue = fn(foundedContent, rule)
             if not reportIssue:
                 return issues
-        evidence = inputFile.Record(result.start(0))
-        i = Issue(info, evidence.Line, evidence.Column, evidence.Content)
+
+        evidence = inputFile.Record(result.start(0), result.end(0))
+        i = Issue(info, evidence.Line, evidence.Column, evidence.Content, lineEnd = evidence.LineEnd, filename = inputFile.Filename, owasp=rule.Category, cwe=rule.CWE, severity=rule.Severity)
         issues.append(i)
     return issues
 
@@ -40,10 +41,12 @@ def run_or_rule(inputFile, rule, info):
 
 class Rule:
 
-    def __init__(self, Description, Recommendation, Category, ExactMatch = None, And = [], Or = [], NotOr = []):
+    def __init__(self, Description, Recommendation, Category, Severity = "", CWE = "", ExactMatch = None, And = [], Or = [], NotOr = []):
         self.Description = Description
         self.Recommendation = Recommendation
         self.Category = Category
+        self.Severity = Severity
+        self.CWE = CWE
         self.ExactMatch = ExactMatch
         self.And = And
         self.Or = Or
