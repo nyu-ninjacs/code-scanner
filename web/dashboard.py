@@ -31,13 +31,13 @@ def scan_result(filename):
         total_files = len(res)
         for item in res:
             sev, issues = utils.get_metrics(item)
-            total_sev.update(sev)
+            total_sev = utils.merge_dict(total_sev, sev)
             total_num_issues += issues
             combined_issues += item.Issues
     else:
         total_files = 1
         sev, issues = utils.get_metrics(res)
-        total_sev.update(sev)
+        total_sev = utils.merge_dict(total_sev, sev)
         total_num_issues += issues
         combined_issues += res.Issues
     context = dict()

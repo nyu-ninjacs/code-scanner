@@ -93,6 +93,15 @@ def get_issues(issues):
         _id += 1
     return res
 
+def merge_dict(dict1, dict2):
+    for k, v in dict2.items():
+        if k in dict1:
+            dict1[k] += v
+        else:
+            dict1[k] = v
+    return dict1
+
+
 def get_issues_dist(issues):
     res = defaultdict(lambda: 0)
     for issue in issues:
